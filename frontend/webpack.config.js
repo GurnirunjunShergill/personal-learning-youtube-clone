@@ -1,47 +1,39 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  entry: './index.js',
-  mode: 'development',
-  target: 'web',
+  entry: "./index.tsx",
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
   },
-  devServer: {
-    static: './dist',
-    open: true,
-    hot: true,
-    liveReload: true,
-  },
+  mode: "development",
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css', ".tsx", ".ts",],
+    extensions: [".tsx", ".ts", ".js"],
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, 
-        exclude: /node_modules/, 
-        use: 'babel-loader', 
-      },
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
+        test: /\.(js|ts|tsx)$/,
         exclude: /node_modules/,
+        use: "babel-loader",
       },
       {
-        test: /\.css$/,  // Apply to all .css files
-        use: [
-          'style-loader',  // Inject CSS into the DOM
-          'css-loader',    // Interpret @import and url() like import/require()
-        ],
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-        template: './index.html'
-    })
-]
+      template: "./index.html",
+    }),
+  ],
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    hot: true,
+    port: 8080,
+  },
 };

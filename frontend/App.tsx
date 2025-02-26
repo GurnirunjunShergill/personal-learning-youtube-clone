@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
+import React from "react";
 
-const App = () => {
-
-  return (
-    <>
-    </>
-  );
-};
+const App = () =>{
+    return(
+        <h1>Test</h1>
+    )
+}
 
 export default App;
